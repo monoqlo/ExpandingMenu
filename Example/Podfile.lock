@@ -1,0 +1,14 @@
+PODS:
+  - ExpandingMenu (0.1.0)
+
+DEPENDENCIES:
+  - ExpandingMenu (from `../`)
+
+EXTERNAL SOURCES:
+  ExpandingMenu:
+    :path: ../
+
+SPEC CHECKSUMS:
+  ExpandingMenu: d1ab7223ee97d8250980263906489b82c6cc12e1
+
+COCOAPODS: 0.38.2

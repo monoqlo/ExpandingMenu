@@ -1,0 +1,12 @@
+source 'https://github.com/CocoaPods/Specs.git'
+use_frameworks!
+
+target 'ExpandingMenu_Example', :exclusive => true do
+  pod "ExpandingMenu", :path => "../"
+end
+
+target 'ExpandingMenu_Tests', :exclusive => true do
+  pod "ExpandingMenu", :path => "../"
+
+  
+end

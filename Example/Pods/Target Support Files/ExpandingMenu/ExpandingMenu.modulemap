@@ -1,0 +1,6 @@
+framework module ExpandingMenu {
+  umbrella header "ExpandingMenu-umbrella.h"
+
+  export *
+  module * { export * }
+}
