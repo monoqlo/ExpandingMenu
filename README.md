@@ -17,12 +17,25 @@ ExpandingMenu is written in Swift.
 
 ## Installation
 
+### CocoaPods
+
 ExpandingMenu is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
 pod "ExpandingMenu"
 ```
+
+### Carthage
+
+To integrate ExpandingMenu into your Xcode project using [Carthage](https://github.com/Carthage/Carthage), specify it in your `Cartfile`:
+
+```ogdl
+github "monoqlo/ExpandingMenu"
+```
+
+Run `carthage update` to build the framework and drag the built `ExpandingMenu.framework` into your Xcode project.
+
 
 ## Usage
 
