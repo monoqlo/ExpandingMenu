@@ -80,6 +80,49 @@ let item5 = ExpandingMenuItem(size: menuButtonSize, title: "Sleep", image: UIIma
 menuButton.addMenuItems([item1, item2, item3, item4, item5])
 ```
 
+## Customize
+
+### ExpandingMenuButton
+
+```swift
+// Bottom dim view
+menuButton.bottomViewColor = UIColor.redColor()
+menuButton.bottomViewAlpha = 0.2
+
+// Whether the tapped action fires when title are tapped
+menuButton.titleTappedActionEnabled = false
+
+// Menu item direction
+menuButton.expandingDirection = .Bottom
+menuButton.menuTitleDirection = .Right
+
+// The action when the menu appears/disappears
+menuButton.willPresentMenuItems = { (menu) -> Void in
+    print("MenuItems will present.")
+}
+
+menuButton.didPresentMenuItems = { (menu) -> Void in
+    print("MenuItems will present.")
+}
+        
+menuButton.willDismissMenuItems = { (menu) -> Void in
+    print("MenuItems dismissed.")
+}
+
+menuButton.didDismissMenuItems = { (menu) -> Void in
+    print("MenuItems will present.")
+}
+```
+
+
+### ExpandingMenuItem
+
+```swift
+// Title
+item.title = "text"
+item.titleColor = UIColor.redColor()
+```
+
 ## Author
 
 monoqlo, monoqlo44@gmail.com
