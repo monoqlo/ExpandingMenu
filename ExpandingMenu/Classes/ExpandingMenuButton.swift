@@ -48,7 +48,11 @@ public class ExpandingMenuButton: UIView, UIGestureRecognizerDelegate {
         }
     }
     
-    public var bottomViewColor: UIColor = UIColor.blackColor()
+    public var bottomViewColor: UIColor = UIColor.blackColor() {
+        didSet {
+            self.bottomView.backgroundColor = bottomViewColor
+        }
+    }
     
     public var expandingDirection: ExpandingDirection = ExpandingDirection.Top
     public var menuTitleDirection: MenuTitleDirection = MenuTitleDirection.Left
