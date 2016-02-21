@@ -1,8 +1,8 @@
 {
   "name": "ExpandingMenu",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "summary": "A mune button expanding vertical.",
-  "description": "",
+  "description": "This library provides a global menu button.",
   "homepage": "https://github.com/monoqlo/ExpandingMenu",
   "license": "MIT",
   "authors": {
@@ -10,17 +10,17 @@
   },
   "source": {
     "git": "https://github.com/monoqlo/ExpandingMenu.git",
-    "tag": "0.1.0"
+    "tag": "0.1.1"
   },
   "social_media_url": "https://twitter.com/monoqlo",
   "platforms": {
     "ios": "8.0"
   },
   "requires_arc": true,
-  "source_files": "Pod/Classes/*.swift",
+  "source_files": "ExpandingMenu/Classes/*.swift",
   "resource_bundles": {
     "ExpandingMenu": [
-      "Pod/Assets/Sounds/*"
+      "ExpandingMenu/Assets/Sounds/*"
     ]
   },
   "frameworks": [
