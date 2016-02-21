@@ -54,6 +54,8 @@ public class ExpandingMenuButton: UIView, UIGestureRecognizerDelegate {
         }
     }
     
+    public var bottomViewAlpha: CGFloat = 0.618
+    
     public var expandingDirection: ExpandingDirection = ExpandingDirection.Top
     public var menuTitleDirection: MenuTitleDirection = MenuTitleDirection.Left
     
@@ -378,7 +380,7 @@ public class ExpandingMenuButton: UIView, UIGestureRecognizerDelegate {
         // 3. Excute the bottom view alpha animation
         //
         UIView.animateWithDuration(0.0618 * 3, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: { () -> Void in
-            self.bottomView.alpha = 0.618
+            self.bottomView.alpha = self.bottomViewAlpha
             }, completion: nil)
         
         // 4. Excute the center button rotation animation
