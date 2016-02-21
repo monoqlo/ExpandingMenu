@@ -56,6 +56,8 @@ public class ExpandingMenuButton: UIView, UIGestureRecognizerDelegate {
     
     public var bottomViewAlpha: CGFloat = 0.618
     
+    public var titleTappedActionEnabled: Bool = true
+    
     public var expandingDirection: ExpandingDirection = ExpandingDirection.Top
     public var menuTitleDirection: MenuTitleDirection = MenuTitleDirection.Left
     
@@ -426,6 +428,8 @@ public class ExpandingMenuButton: UIView, UIGestureRecognizerDelegate {
             
             // 3. Add Title Button
             //
+            item.titleTappedActionEnabled = self.titleTappedActionEnabled
+            
             if let titleButton = item.titleButton {
                 titleButton.center = endPoint
                 let margin: CGFloat = 8.0

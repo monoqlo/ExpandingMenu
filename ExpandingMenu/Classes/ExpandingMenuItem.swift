@@ -39,7 +39,7 @@ public class ExpandingMenuItem: UIView {
         }
     }
     
-    public var titleTappedActionEnabled: Bool = true {
+    var titleTappedActionEnabled: Bool = true {
         didSet {
             self.titleButton?.userInteractionEnabled = titleTappedActionEnabled
         }
