@@ -112,6 +112,16 @@ menuButton.willDismissMenuItems = { (menu) -> Void in
 menuButton.didDismissMenuItems = { (menu) -> Void in
     print("MenuItems will present.")
 }
+
+// Expanding Animation
+menuButton.enabledExpandingAnimations = [] // No animation
+
+menuButton.enabledExpandingAnimations = AnimationOptions.All.exclusiveOr(.MenuItemRotation)
+
+// Folding Animation
+menuButton.enabledFoldingAnimations = .All
+
+menuButton.enabledFoldingAnimations = [.MenuItemMoving, .MenuItemFade, .MenuButtonRotation]
 ```
 
 
