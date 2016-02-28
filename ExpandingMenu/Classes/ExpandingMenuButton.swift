@@ -8,6 +8,21 @@
 import UIKit
 import AudioToolbox
 
+public struct AnimationOptions : OptionSetType {
+    public let rawValue: Int
+    public init(rawValue: Int) { self.rawValue = rawValue }
+    
+    public static let MenuItemRotation = AnimationOptions(rawValue: 1)
+    public static let MenuItemBound = AnimationOptions(rawValue: 2)
+    public static let MenuItemMoving = AnimationOptions(rawValue: 4)
+    public static let MenuItemFade = AnimationOptions(rawValue: 8)
+    
+    public static let MenuButtonRotation = AnimationOptions(rawValue: 16)
+    
+    public static let Default: AnimationOptions = [MenuItemRotation, MenuItemBound, MenuItemMoving, MenuButtonRotation]
+    public static let All: AnimationOptions = [MenuItemRotation, MenuItemBound, MenuItemMoving, MenuItemFade, MenuButtonRotation]
+}
+
 public class ExpandingMenuButton: UIView, UIGestureRecognizerDelegate {
     
     public enum ExpandingDirection {
@@ -22,7 +37,6 @@ public class ExpandingMenuButton: UIView, UIGestureRecognizerDelegate {
     
     // MARK: Public Properties
     public var menuItemMargin: CGFloat = 16.0
-    public var allowCenterButtonRotation: Bool = true
     
     public var allowSounds: Bool = true {
         didSet {
@@ -60,6 +74,9 @@ public class ExpandingMenuButton: UIView, UIGestureRecognizerDelegate {
     
     public var expandingDirection: ExpandingDirection = ExpandingDirection.Top
     public var menuTitleDirection: MenuTitleDirection = MenuTitleDirection.Left
+    
+    public var enabledExpandingAnimations: AnimationOptions = .Default
+    public var enabledFoldingAnimations: AnimationOptions = .Default
     
     public var willPresentMenuItems: ((ExpandingMenuButton) -> Void)?
     public var didPresentMenuItems: ((ExpandingMenuButton) -> Void)?
@@ -294,10 +311,12 @@ public class ExpandingMenuButton: UIView, UIGestureRecognizerDelegate {
     }
     
     private func resizeToFoldedFrame(completion completion: (() -> Void)?) {
-        if self.allowCenterButtonRotation == true {
+        if self.enabledFoldingAnimations.contains(.MenuButtonRotation) == true {
             UIView.animateWithDuration(0.0618 * 3, delay: 0.0618 * 2, options: UIViewAnimationOptions.CurveEaseIn, animations: { () -> Void in
                 self.centerButton.transform = CGAffineTransformMakeRotation(0.0)
                 }, completion: nil)
+        } else {
+            self.centerButton.transform = CGAffineTransformMakeRotation(0.0)
         }
         
         UIView.animateWithDuration(0.15, delay: 0.35, options: UIViewAnimationOptions.CurveLinear, animations: { () -> Void in
@@ -323,12 +342,20 @@ public class ExpandingMenuButton: UIView, UIGestureRecognizerDelegate {
     }
     
     private func makeFoldAnimation(startingPoint startingPoint: CGPoint, backwardPoint: CGPoint, endPoint: CGPoint) -> CAAnimationGroup {
+        let animationGroup: CAAnimationGroup = CAAnimationGroup()
+        animationGroup.animations = []
+        animationGroup.duration = 0.35
+        
         // 1.Configure rotation animation
         //
-        let rotationAnimation: CAKeyframeAnimation = CAKeyframeAnimation(keyPath: "transform.rotation.z")
-        rotationAnimation.values = [NSNumber(float: 0.0), NSNumber(double: M_PI), NSNumber(double: M_PI * 2.0)]
-        rotationAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
-        rotationAnimation.duration = 0.35
+        if self.enabledFoldingAnimations.contains(.MenuItemRotation) == true {
+            let rotationAnimation: CAKeyframeAnimation = CAKeyframeAnimation(keyPath: "transform.rotation.z")
+            rotationAnimation.values = [0.0, M_PI, M_PI * 2.0]
+            rotationAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
+            rotationAnimation.duration = 0.35
+            
+            animationGroup.animations?.append(rotationAnimation)
+        }
         
         // 2.Configure moving animation
         //
@@ -337,22 +364,45 @@ public class ExpandingMenuButton: UIView, UIGestureRecognizerDelegate {
         // Create moving path
         //
         let path: CGMutablePathRef = CGPathCreateMutable()
-        CGPathMoveToPoint(path, nil, startingPoint.x, startingPoint.y)
-        CGPathAddLineToPoint(path, nil, backwardPoint.x, backwardPoint.y)
-        CGPathAddLineToPoint(path, nil, endPoint.x, endPoint.y)
         
-        movingAnimation.keyTimes = [NSNumber(float: 0.0), NSNumber(float: 0.75), NSNumber(float: 1.0)]
+        if self.enabledFoldingAnimations.contains([.MenuItemMoving, .MenuItemBound]) == true {
+            CGPathMoveToPoint(path, nil, startingPoint.x, startingPoint.y)
+            CGPathAddLineToPoint(path, nil, backwardPoint.x, backwardPoint.y)
+            CGPathAddLineToPoint(path, nil, endPoint.x, endPoint.y)
+            
+            movingAnimation.keyTimes = [0.0, 0.75, 1.0]
+        } else if self.enabledFoldingAnimations.contains(.MenuItemMoving) == true {
+            CGPathMoveToPoint(path, nil, startingPoint.x, startingPoint.y)
+            CGPathAddLineToPoint(path, nil, endPoint.x, endPoint.y)
+            
+            movingAnimation.keyTimes = [0.0, 0.75, 1.0]
+        } else if self.enabledFoldingAnimations.contains(.MenuItemBound) == true {
+            CGPathMoveToPoint(path, nil, startingPoint.x, startingPoint.y)
+            CGPathAddLineToPoint(path, nil, backwardPoint.x, backwardPoint.y)
+            CGPathAddLineToPoint(path, nil, startingPoint.x, startingPoint.y)
+            
+            movingAnimation.keyTimes = [0.0, 0.3, 0.5, 1.0]
+        } else if self.enabledFoldingAnimations.contains(.MenuItemFade) {
+            CGPathMoveToPoint(path, nil, startingPoint.x, startingPoint.y)
+            CGPathAddLineToPoint(path, nil, startingPoint.x, startingPoint.y)
+        }
         
         movingAnimation.path = path
         movingAnimation.duration = 0.35
         
-        // 3.Merge animation together
-        //
-        let animations: CAAnimationGroup = CAAnimationGroup()
-        animations.animations = [rotationAnimation, movingAnimation]
-        animations.duration = 0.35;
+        animationGroup.animations?.append(movingAnimation)
         
-        return animations;
+        // 3.Configure fade animation
+        //
+        if self.enabledFoldingAnimations.contains(.MenuItemFade) {
+            let fadeAnimation = CAKeyframeAnimation(keyPath: "opacity")
+            fadeAnimation.values = [1.0, 0.0]
+            fadeAnimation.keyTimes = [0.0, 0.75, 1.0]
+            fadeAnimation.duration = 0.35
+            animationGroup.animations?.append(fadeAnimation)
+        }
+        
+        return animationGroup
     }
     
     
@@ -387,10 +437,12 @@ public class ExpandingMenuButton: UIView, UIGestureRecognizerDelegate {
         
         // 4. Excute the center button rotation animation
         //
-        if self.allowCenterButtonRotation == true {
+        if self.enabledExpandingAnimations.contains(.MenuButtonRotation) == true {
             UIView.animateWithDuration(0.1575, animations: { () -> Void in
                 self.centerButton.transform = CGAffineTransformMakeRotation(CGFloat(-0.5 * M_PI))
             })
+        } else {
+            self.centerButton.transform = CGAffineTransformMakeRotation(CGFloat(-0.5 * M_PI))
         }
         
         // 5. Excute the expanding animation
@@ -465,12 +517,20 @@ public class ExpandingMenuButton: UIView, UIGestureRecognizerDelegate {
     }
     
     private func makeExpandingAnimation(startingPoint startingPoint: CGPoint, farPoint: CGPoint, nearPoint: CGPoint, endPoint: CGPoint) -> CAAnimationGroup {
+        let animationGroup: CAAnimationGroup = CAAnimationGroup()
+        animationGroup.animations = []
+        animationGroup.duration = 0.3
+        
         // 1.Configure rotation animation
         //
-        let rotationAnimation: CAKeyframeAnimation = CAKeyframeAnimation(keyPath: "transform.rotation.z")
-        rotationAnimation.values = [NSNumber(float: 0.0), NSNumber(double: -M_PI), NSNumber(double: -M_PI * 1.5), NSNumber(double: -M_PI * 2.0)]
-        rotationAnimation.duration = 0.3
-        rotationAnimation.keyTimes = [NSNumber(float: 0.0), NSNumber(float: 0.3), NSNumber(float: 0.6), NSNumber(float: 1.0)]
+        if self.enabledExpandingAnimations.contains(.MenuItemRotation) == true {
+            let rotationAnimation: CAKeyframeAnimation = CAKeyframeAnimation(keyPath: "transform.rotation.z")
+            rotationAnimation.values = [0.0, -M_PI, -M_PI * 1.5, -M_PI * 2.0]
+            rotationAnimation.duration = 0.3
+            rotationAnimation.keyTimes = [0.0, 0.3, 0.6, 1.0]
+            
+            animationGroup.animations?.append(rotationAnimation)
+        }
         
         // 2.Configure moving animation
         //
@@ -479,22 +539,45 @@ public class ExpandingMenuButton: UIView, UIGestureRecognizerDelegate {
         // Create moving path
         //
         let path: CGMutablePathRef = CGPathCreateMutable()
-        CGPathMoveToPoint(path, nil, startingPoint.x, startingPoint.y)
-        CGPathAddLineToPoint(path, nil, farPoint.x, farPoint.y)
-        CGPathAddLineToPoint(path, nil, nearPoint.x, nearPoint.y)
-        CGPathAddLineToPoint(path, nil, endPoint.x, endPoint.y)
+        
+        if self.enabledExpandingAnimations.contains([.MenuItemMoving, .MenuItemBound]) == true {
+            CGPathMoveToPoint(path, nil, startingPoint.x, startingPoint.y)
+            CGPathAddLineToPoint(path, nil, farPoint.x, farPoint.y)
+            CGPathAddLineToPoint(path, nil, nearPoint.x, nearPoint.y)
+            CGPathAddLineToPoint(path, nil, endPoint.x, endPoint.y)
+            
+            movingAnimation.keyTimes = [0.0, 0.5, 0.7, 1.0]
+        } else if self.enabledExpandingAnimations.contains(.MenuItemMoving) == true {
+            CGPathMoveToPoint(path, nil, startingPoint.x, startingPoint.y)
+            CGPathAddLineToPoint(path, nil, endPoint.x, endPoint.y)
+            
+            movingAnimation.keyTimes = [0.0, 0.5, 1.0]
+        } else if self.enabledExpandingAnimations.contains(.MenuItemBound) == true {
+            CGPathMoveToPoint(path, nil, farPoint.x, farPoint.y)
+            CGPathAddLineToPoint(path, nil, nearPoint.x, nearPoint.y)
+            CGPathAddLineToPoint(path, nil, endPoint.x, endPoint.y)
+            
+            movingAnimation.keyTimes = [0.0, 0.3, 0.5, 1.0]
+        } else if self.enabledExpandingAnimations.contains(.MenuItemFade) {
+            CGPathMoveToPoint(path, nil, endPoint.x, endPoint.y)
+            CGPathAddLineToPoint(path, nil, endPoint.x, endPoint.y)
+        }
         
         movingAnimation.path = path
-        movingAnimation.keyTimes = [NSNumber(float: 0.0), NSNumber(float: 0.5), NSNumber(float: 0.7), NSNumber(float: 1.0)]
         movingAnimation.duration = 0.3
         
-        // 3.Merge animation together
-        //
-        let animations: CAAnimationGroup = CAAnimationGroup()
-        animations.animations = [rotationAnimation, movingAnimation]
-        animations.duration = 0.3;
+        animationGroup.animations?.append(movingAnimation)
         
-        return animations;
+        // 3.Configure fade animation
+        //
+        if self.enabledExpandingAnimations.contains(.MenuItemFade) {
+            let fadeAnimation = CAKeyframeAnimation(keyPath: "opacity")
+            fadeAnimation.values = [0.0, 1.0]
+            fadeAnimation.duration = 0.3
+            animationGroup.animations?.append(fadeAnimation)
+        }
+        
+        return animationGroup
     }
     
     // MARK: - Touch Event
