@@ -17,7 +17,7 @@ public class ExpandingMenuItem: UIView {
         set {
             if let title = newValue {
                 if let titleButton = self.titleButton {
-                    titleButton.setTitle(title, forState: .Normal)
+                    titleButton.setTitle(title, for: UIControlState())
                 } else {
                     self.titleButton = self.createTitleButton(title, titleColor: self.titleColor)
                 }
@@ -31,17 +31,17 @@ public class ExpandingMenuItem: UIView {
     
     public var titleColor: UIColor? {
         get {
-            return self.titleButton?.titleColorForState(.Normal)
+            return self.titleButton?.titleColor(for: UIControlState())
         }
         
         set {
-            self.titleButton?.setTitleColor(newValue, forState: .Normal)
+            self.titleButton?.setTitleColor(newValue, for: UIControlState())
         }
     }
     
     var titleTappedActionEnabled: Bool = true {
         didSet {
-            self.titleButton?.userInteractionEnabled = titleTappedActionEnabled
+            self.titleButton?.isUserInteractionEnabled = titleTappedActionEnabled
         }
     }
     
@@ -62,7 +62,7 @@ public class ExpandingMenuItem: UIView {
         // Configure frame
         //
         let itemFrame: CGRect
-        if let itemSize = size where itemSize != CGSizeZero {
+        if let itemSize = size where itemSize != CGSize.zero {
             itemFrame = CGRect(x: 0.0, y: 0.0, width: itemSize.width, height: itemSize.height)
         } else {
             if let bgImage = backgroundImage where backgroundHighlightedImage != nil {
@@ -77,31 +77,31 @@ public class ExpandingMenuItem: UIView {
         // Configure base button
         //
         let baseButton = UIButton()
-        baseButton.setImage(backgroundImage, forState: UIControlState.Normal)
-        baseButton.setImage(backgroundHighlightedImage, forState: UIControlState.Highlighted)
+        baseButton.setImage(backgroundImage, for: UIControlState())
+        baseButton.setImage(backgroundHighlightedImage, for: UIControlState.highlighted)
         baseButton.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(baseButton)
         
-        self.addConstraint(NSLayoutConstraint(item: baseButton, attribute: .Top, relatedBy: .Equal, toItem: self, attribute: .Top, multiplier: 1, constant: 0))
-        self.addConstraint(NSLayoutConstraint(item: baseButton, attribute: .Bottom, relatedBy: .Equal, toItem: self, attribute: .Bottom, multiplier: 1, constant: 0))
-        self.addConstraint(NSLayoutConstraint(item: baseButton, attribute: .Leading, relatedBy: .Equal, toItem: self, attribute: .Leading, multiplier: 1, constant: 0))
-        self.addConstraint(NSLayoutConstraint(item: baseButton, attribute: .Trailing, relatedBy: .Equal, toItem: self, attribute: .Trailing, multiplier: 1, constant: 0))
+        self.addConstraint(NSLayoutConstraint(item: baseButton, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0))
+        self.addConstraint(NSLayoutConstraint(item: baseButton, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0))
+        self.addConstraint(NSLayoutConstraint(item: baseButton, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 0))
+        self.addConstraint(NSLayoutConstraint(item: baseButton, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: 0))
         
         
         // Add an action for the item
         //
-        baseButton.addTarget(self, action: "tapped", forControlEvents: UIControlEvents.TouchUpInside)
+        baseButton.addTarget(self, action: #selector(ExpandingMenuItem.tapped), for: UIControlEvents.touchUpInside)
         
         // Configure front images
         //
-        self.frontImageView.contentMode = .Center
+        self.frontImageView.contentMode = .center
         self.frontImageView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(self.frontImageView)
         
-        self.addConstraint(NSLayoutConstraint(item: self.frontImageView, attribute: .Top, relatedBy: .Equal, toItem: self, attribute: .Top, multiplier: 1, constant: 0))
-        self.addConstraint(NSLayoutConstraint(item: self.frontImageView, attribute: .Bottom, relatedBy: .Equal, toItem: self, attribute: .Bottom, multiplier: 1, constant: 0))
-        self.addConstraint(NSLayoutConstraint(item: self.frontImageView, attribute: .Leading, relatedBy: .Equal, toItem: self, attribute: .Leading, multiplier: 1, constant: 0))
-        self.addConstraint(NSLayoutConstraint(item: self.frontImageView, attribute: .Trailing, relatedBy: .Equal, toItem: self, attribute: .Trailing, multiplier: 1, constant: 0))
+        self.addConstraint(NSLayoutConstraint(item: self.frontImageView, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0))
+        self.addConstraint(NSLayoutConstraint(item: self.frontImageView, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0))
+        self.addConstraint(NSLayoutConstraint(item: self.frontImageView, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 0))
+        self.addConstraint(NSLayoutConstraint(item: self.frontImageView, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: 0))
         
         // Configure title button
         //
@@ -129,13 +129,13 @@ public class ExpandingMenuItem: UIView {
     }
     
     // MARK: - Title Button
-    private func createTitleButton(title: String, titleColor: UIColor? = nil) -> UIButton {
+    private func createTitleButton(_ title: String, titleColor: UIColor? = nil) -> UIButton {
         let button = UIButton()
-        button.setTitle(title, forState: .Normal)
-        button.setTitleColor(titleColor, forState: .Normal)
+        button.setTitle(title, for: UIControlState())
+        button.setTitleColor(titleColor, for: UIControlState())
         button.sizeToFit()
         
-        button.addTarget(self, action: "tapped", forControlEvents: UIControlEvents.TouchUpInside)
+        button.addTarget(self, action: #selector(ExpandingMenuItem.tapped), for: UIControlEvents.touchUpInside)
         
         return button
     }
