@@ -57,6 +57,10 @@ github "monoqlo/ExpandingMenu" ~> 0.1
 
 Run `carthage update` to build the framework and drag the built `ExpandingMenu.framework` into your Xcode project.
 
+### Manually
+1. Download and drop ```ExpandingMenuButton.swift``` and ```ExpandingMenuItem.swift``` in your project.  
+2. Congratulations!  
+
 ## Usage
 
 ```swift
