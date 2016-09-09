@@ -29,6 +29,8 @@ public class ExpandingMenuItem: UIView {
         }
     }
     
+    public var titleMargin: CGFloat = 8.0
+    
     public var titleColor: UIColor? {
         get {
             return self.titleButton?.titleColorForState(.Normal)

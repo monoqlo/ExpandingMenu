@@ -484,7 +484,7 @@ public class ExpandingMenuButton: UIView, UIGestureRecognizerDelegate {
             
             if let titleButton = item.titleButton {
                 titleButton.center = endPoint
-                let margin: CGFloat = 8.0
+                let margin: CGFloat = item.titleMargin
                 
                 let originX: CGFloat
                 
