@@ -135,6 +135,9 @@ menuButton.enabledFoldingAnimations = [.MenuItemMoving, .MenuItemFade, .MenuButt
 // Title
 item.title = "text"
 item.titleColor = UIColor.redColor()
+
+// Title margin to menu item
+item.titleMargin = 4
 ```
 
 ## Author
