@@ -122,7 +122,7 @@ public class ExpandingMenuButton: UIView, UIGestureRecognizerDelegate {
             self.centerButton = UIButton(frame: CGRect(x: 0.0, y: 0.0, width: centerButtonSize.width, height: centerButtonSize.height))
             self.centerButton.setImage(self.centerImage, forState: UIControlState.Normal)
             self.centerButton.setImage(self.centerHighlightedImage, forState: UIControlState.Highlighted)
-            self.centerButton.addTarget(self, action: "centerButtonTapped", forControlEvents: UIControlEvents.TouchDown)
+            self.centerButton.addTarget(self, action: #selector(centerButtonTapped), forControlEvents: UIControlEvents.TouchDown)
             self.centerButton.center = CGPoint(x: self.frame.width / 2.0, y: self.frame.height / 2.0)
             self.addSubview(self.centerButton)
             

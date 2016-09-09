@@ -92,7 +92,7 @@ public class ExpandingMenuItem: UIView {
         
         // Add an action for the item
         //
-        baseButton.addTarget(self, action: "tapped", forControlEvents: UIControlEvents.TouchUpInside)
+        baseButton.addTarget(self, action: #selector(tapped), forControlEvents: UIControlEvents.TouchUpInside)
         
         // Configure front images
         //
@@ -137,7 +137,7 @@ public class ExpandingMenuItem: UIView {
         button.setTitleColor(titleColor, forState: .Normal)
         button.sizeToFit()
         
-        button.addTarget(self, action: "tapped", forControlEvents: UIControlEvents.TouchUpInside)
+        button.addTarget(self, action: #selector(tapped), forControlEvents: UIControlEvents.TouchUpInside)
         
         return button
     }
