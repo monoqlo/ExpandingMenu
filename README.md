@@ -31,7 +31,9 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 use_frameworks!
 
-pod 'ExpandingMenu', '~> 0.1'
+target '<Your Target Name>' do
+    pod 'ExpandingMenu', '~> 0.2'
+end
 ```
 
 Then, run the following command:
