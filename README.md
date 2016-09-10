@@ -12,7 +12,7 @@ ExpandingMenu is written in Swift.
 ## Requirements
 
 - iOS 8.0+
-- Xcode 7.0+
+- Xcode 8.0+
 
 ## Installation
 
@@ -32,7 +32,7 @@ platform :ios, '8.0'
 use_frameworks!
 
 target '<Your Target Name>' do
-    pod 'ExpandingMenu', '~> 0.2'
+    pod 'ExpandingMenu', '~> 0.3'
 end
 ```
 
@@ -54,7 +54,7 @@ $ brew install carthage
 To integrate ExpandingMenu into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
-github "monoqlo/ExpandingMenu" ~> 0.1
+github "monoqlo/ExpandingMenu" ~> 0.3
 ```
 
 Run `carthage update` to build the framework and drag the built `ExpandingMenu.framework` into your Xcode project.
