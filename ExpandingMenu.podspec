@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "ExpandingMenu"
-  s.version          = "0.1.4"
+  s.version          = "0.2"
   s.summary          = "A mune button expanding vertical."
 
 # This description is used to generate tags and improve search results.
