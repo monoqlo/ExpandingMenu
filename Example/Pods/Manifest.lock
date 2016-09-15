@@ -1,5 +1,5 @@
 PODS:
-  - ExpandingMenu (0.1.1)
+  - ExpandingMenu (0.3.1)
 
 DEPENDENCIES:
   - ExpandingMenu (from `../`)
@@ -9,6 +9,8 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  ExpandingMenu: a38ad135f85954b9ba1b0db4e394cbef0df572e7
+  ExpandingMenu: 107548f3cb8c04b28a8b6b436983f506849484cc
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: 3f8cfad6e98788bd99f02169d65e2d62d19f6aae
+
+COCOAPODS: 1.1.0.rc.2
