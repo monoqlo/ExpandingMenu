@@ -253,13 +253,13 @@ open class ExpandingMenuButton: UIView, UIGestureRecognizerDelegate {
         switch self.expandingDirection {
         case .top:
             return CGPoint(
-                x: self.centerButton.center.x + CGFloat(cosf((Float(angle) + 1.0) * Float(M_PI))) * itemExpandRadius,
-                y: self.centerButton.center.y + CGFloat(sinf((Float(angle) + 1.0) * Float(M_PI))) * itemExpandRadius
+                x: self.centerButton.center.x + CGFloat(cosf((Float(angle) + 1.0) * Float.pi)) * itemExpandRadius,
+                y: self.centerButton.center.y + CGFloat(sinf((Float(angle) + 1.0) * Float.pi)) * itemExpandRadius
             )
         case .bottom:
             return CGPoint(
-                x: self.centerButton.center.x + CGFloat(cosf(Float(angle) * Float(M_PI))) * itemExpandRadius,
-                y: self.centerButton.center.y + CGFloat(sinf(Float(angle) * Float(M_PI))) * itemExpandRadius
+                x: self.centerButton.center.x + CGFloat(cosf(Float(angle) * Float.pi)) * itemExpandRadius,
+                y: self.centerButton.center.y + CGFloat(sinf(Float(angle) * Float.pi)) * itemExpandRadius
             )
         }
     }
@@ -350,7 +350,7 @@ open class ExpandingMenuButton: UIView, UIGestureRecognizerDelegate {
         //
         if self.enabledFoldingAnimations.contains(.MenuItemRotation) == true {
             let rotationAnimation: CAKeyframeAnimation = CAKeyframeAnimation(keyPath: "transform.rotation.z")
-            rotationAnimation.values = [0.0, M_PI, M_PI * 2.0]
+            rotationAnimation.values = [0.0, Double.pi, Double.pi * 2.0]
             rotationAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
             rotationAnimation.duration = 0.35
             
@@ -439,10 +439,10 @@ open class ExpandingMenuButton: UIView, UIGestureRecognizerDelegate {
         //
         if self.enabledExpandingAnimations.contains(.MenuButtonRotation) == true {
             UIView.animate(withDuration: 0.1575, animations: { () -> Void in
-                self.centerButton.transform = CGAffineTransform(rotationAngle: CGFloat(-0.5 * M_PI))
+                self.centerButton.transform = CGAffineTransform(rotationAngle: CGFloat(-0.5 * Float.pi))
             })
         } else {
-            self.centerButton.transform = CGAffineTransform(rotationAngle: CGFloat(-0.5 * M_PI))
+            self.centerButton.transform = CGAffineTransform(rotationAngle: CGFloat(-0.5 * Float.pi))
         }
         
         // 5. Excute the expanding animation
@@ -525,7 +525,7 @@ open class ExpandingMenuButton: UIView, UIGestureRecognizerDelegate {
         //
         if self.enabledExpandingAnimations.contains(.MenuItemRotation) == true {
             let rotationAnimation: CAKeyframeAnimation = CAKeyframeAnimation(keyPath: "transform.rotation.z")
-            rotationAnimation.values = [0.0, -M_PI, -M_PI * 1.5, -M_PI * 2.0]
+            rotationAnimation.values = [0.0, -Double.pi, -Double.pi * 1.5, -Double.pi  * 2.0]
             rotationAnimation.duration = 0.3
             rotationAnimation.keyTimes = [0.0, 0.3, 0.6, 1.0]
             
