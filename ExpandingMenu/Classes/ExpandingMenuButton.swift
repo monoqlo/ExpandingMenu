@@ -36,41 +36,41 @@ open class ExpandingMenuButton: UIView, UIGestureRecognizerDelegate {
     }
     
     // MARK: Public Properties
-    open var menuItemMargin: CGFloat = 16.0
+    @objc open var menuItemMargin: CGFloat = 16.0
     
-    open var allowSounds: Bool = true {
+    @objc open var allowSounds: Bool = true {
         didSet {
             self.configureSounds()
         }
     }
     
-    open var expandingSoundPath: String = Bundle(url: Bundle(for: ExpandingMenuButton.classForCoder()).url(forResource: "ExpandingMenu", withExtension: "bundle")!)?.path(forResource: "expanding", ofType: "caf") ?? "" {
+    @objc open var expandingSoundPath: String = Bundle(url: Bundle(for: ExpandingMenuButton.classForCoder()).url(forResource: "ExpandingMenu", withExtension: "bundle")!)?.path(forResource: "expanding", ofType: "caf") ?? "" {
         didSet {
             self.configureSounds()
         }
     }
     
-    open var foldSoundPath: String = Bundle(url: Bundle(for: ExpandingMenuButton.classForCoder()).url(forResource: "ExpandingMenu", withExtension: "bundle")!)?.path(forResource: "fold", ofType: "caf") ?? "" {
+    @objc open var foldSoundPath: String = Bundle(url: Bundle(for: ExpandingMenuButton.classForCoder()).url(forResource: "ExpandingMenu", withExtension: "bundle")!)?.path(forResource: "fold", ofType: "caf") ?? "" {
         didSet {
             self.configureSounds()
         }
     }
     
-    open var selectedSoundPath: String = Bundle(url: Bundle(for: ExpandingMenuButton.classForCoder()).url(forResource: "ExpandingMenu", withExtension: "bundle")!)?.path(forResource: "selected", ofType: "caf") ?? "" {
+    @objc open var selectedSoundPath: String = Bundle(url: Bundle(for: ExpandingMenuButton.classForCoder()).url(forResource: "ExpandingMenu", withExtension: "bundle")!)?.path(forResource: "selected", ofType: "caf") ?? "" {
         didSet {
             self.configureSounds()
         }
     }
     
-    open var bottomViewColor: UIColor = UIColor.black {
+    @objc open var bottomViewColor: UIColor = UIColor.black {
         didSet {
             self.bottomView.backgroundColor = bottomViewColor
         }
     }
     
-    open var bottomViewAlpha: CGFloat = 0.618
+    @objc open var bottomViewAlpha: CGFloat = 0.618
     
-    open var titleTappedActionEnabled: Bool = true
+    @objc open var titleTappedActionEnabled: Bool = true
     
     open var expandingDirection: ExpandingDirection = ExpandingDirection.top
     open var menuTitleDirection: MenuTitleDirection = MenuTitleDirection.left
@@ -78,10 +78,10 @@ open class ExpandingMenuButton: UIView, UIGestureRecognizerDelegate {
     open var enabledExpandingAnimations: AnimationOptions = .Default
     open var enabledFoldingAnimations: AnimationOptions = .Default
     
-    open var willPresentMenuItems: ((ExpandingMenuButton) -> Void)?
-    open var didPresentMenuItems: ((ExpandingMenuButton) -> Void)?
-    open var willDismissMenuItems: ((ExpandingMenuButton) -> Void)?
-    open var didDismissMenuItems: ((ExpandingMenuButton) -> Void)?
+    @objc open var willPresentMenuItems: ((ExpandingMenuButton) -> Void)?
+    @objc open var didPresentMenuItems: ((ExpandingMenuButton) -> Void)?
+    @objc open var willDismissMenuItems: ((ExpandingMenuButton) -> Void)?
+    @objc open var didDismissMenuItems: ((ExpandingMenuButton) -> Void)?
     
     // MARK: Private Properties
     fileprivate var defaultCenterPoint: CGPoint = CGPoint.zero
@@ -108,7 +108,7 @@ open class ExpandingMenuButton: UIView, UIGestureRecognizerDelegate {
     
     
     // MARK: - Initializer
-    public init(frame: CGRect, centerImage: UIImage, centerHighlightedImage: UIImage) {
+    @objc public init(frame: CGRect, centerImage: UIImage, centerHighlightedImage: UIImage) {
         super.init(frame: frame)
         
         func configureViewsLayoutWithButtonSize(_ centerButtonSize: CGSize) {
@@ -155,7 +155,7 @@ open class ExpandingMenuButton: UIView, UIGestureRecognizerDelegate {
         self.configureSounds()
     }
     
-    public convenience init(centerImage: UIImage, centerHighlightedImage: UIImage) {
+    @objc public convenience init(centerImage: UIImage, centerHighlightedImage: UIImage) {
         self.init(frame: CGRect.zero, centerImage: centerImage, centerHighlightedImage: centerHighlightedImage)
     }
     
@@ -164,12 +164,12 @@ open class ExpandingMenuButton: UIView, UIGestureRecognizerDelegate {
     }
     
     // MARK: - Configure Menu Items
-    open func addMenuItems(_ menuItems: [ExpandingMenuItem]) {
+    @objc open func addMenuItems(_ menuItems: [ExpandingMenuItem]) {
         self.menuItems += menuItems
     }
     
     // MARK: - Menu Item Tapped Action
-    open func menuItemTapped(_ item: ExpandingMenuItem) {
+    @objc open func menuItemTapped(_ item: ExpandingMenuItem) {
         self.willDismissMenuItems?(self)
         self.isAnimating = true
         

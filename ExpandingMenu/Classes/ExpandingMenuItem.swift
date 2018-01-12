@@ -9,7 +9,7 @@ import UIKit
 
 open class ExpandingMenuItem: UIView {
     
-    open var title: String? {
+    @objc open var title: String? {
         get {
             return self.titleButton?.titleLabel?.text
         }
@@ -29,9 +29,9 @@ open class ExpandingMenuItem: UIView {
         }
     }
     
-    open var titleMargin: CGFloat = 8.0
+    @objc open var titleMargin: CGFloat = 8.0
     
-    open var titleColor: UIColor? {
+    @objc open var titleColor: UIColor? {
         get {
             return self.titleButton?.titleColor(for: UIControlState())
         }
@@ -41,7 +41,7 @@ open class ExpandingMenuItem: UIView {
         }
     }
     
-    var titleTappedActionEnabled: Bool = true {
+    @objc var titleTappedActionEnabled: Bool = true {
         didSet {
             self.titleButton?.isUserInteractionEnabled = titleTappedActionEnabled
         }
@@ -112,15 +112,15 @@ open class ExpandingMenuItem: UIView {
         }
     }
     
-    public convenience init(image: UIImage, highlightedImage: UIImage, backgroundImage: UIImage?, backgroundHighlightedImage: UIImage?, itemTapped: (() -> Void)?) {
+    @objc public convenience init(image: UIImage, highlightedImage: UIImage, backgroundImage: UIImage?, backgroundHighlightedImage: UIImage?, itemTapped: (() -> Void)?) {
         self.init(size: nil, title: nil, image: image, highlightedImage: highlightedImage, backgroundImage: backgroundImage, backgroundHighlightedImage: backgroundHighlightedImage, itemTapped: itemTapped)
     }
     
-    public convenience init(title: String, titleColor: UIColor? = nil, image: UIImage, highlightedImage: UIImage, backgroundImage: UIImage?, backgroundHighlightedImage: UIImage?, itemTapped: (() -> Void)?) {
+    @objc public convenience init(title: String, titleColor: UIColor? = nil, image: UIImage, highlightedImage: UIImage, backgroundImage: UIImage?, backgroundHighlightedImage: UIImage?, itemTapped: (() -> Void)?) {
         self.init(size: nil, title: title, titleColor: titleColor, image: image, highlightedImage: highlightedImage, backgroundImage: backgroundImage, backgroundHighlightedImage: backgroundHighlightedImage, itemTapped: itemTapped)
     }
     
-    public convenience init(size: CGSize, image: UIImage, highlightedImage: UIImage, backgroundImage: UIImage?, backgroundHighlightedImage: UIImage?, itemTapped: (() -> Void)?) {
+    @objc public convenience init(size: CGSize, image: UIImage, highlightedImage: UIImage, backgroundImage: UIImage?, backgroundHighlightedImage: UIImage?, itemTapped: (() -> Void)?) {
         self.init(size: size, title: nil, image: image, highlightedImage: highlightedImage, backgroundImage: backgroundImage, backgroundHighlightedImage: backgroundHighlightedImage, itemTapped: itemTapped)
     }
     
@@ -143,7 +143,7 @@ open class ExpandingMenuItem: UIView {
     }
     
     // MARK: - Tapped Action
-    func tapped() {
+    @objc func tapped() {
         self.delegate?.menuItemTapped(self)
         self.tappedAction?()
     }
