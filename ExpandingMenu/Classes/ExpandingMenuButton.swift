@@ -8,19 +8,19 @@
 import UIKit
 import AudioToolbox
 
-public struct AnimationOptions : OptionSet {
+public struct CustomAnimationOptions : OptionSet {
     public let rawValue: Int
     public init(rawValue: Int) { self.rawValue = rawValue }
     
-    public static let MenuItemRotation = AnimationOptions(rawValue: 1)
-    public static let MenuItemBound = AnimationOptions(rawValue: 2)
-    public static let MenuItemMoving = AnimationOptions(rawValue: 4)
-    public static let MenuItemFade = AnimationOptions(rawValue: 8)
+    public static let MenuItemRotation = CustomAnimationOptions(rawValue: 1)
+    public static let MenuItemBound = CustomAnimationOptions(rawValue: 2)
+    public static let MenuItemMoving = CustomAnimationOptions(rawValue: 4)
+    public static let MenuItemFade = CustomAnimationOptions(rawValue: 8)
     
-    public static let MenuButtonRotation = AnimationOptions(rawValue: 16)
+    public static let MenuButtonRotation = CustomAnimationOptions(rawValue: 16)
     
-    public static let Default: AnimationOptions = [MenuItemRotation, MenuItemBound, MenuItemMoving, MenuButtonRotation]
-    public static let All: AnimationOptions = [MenuItemRotation, MenuItemBound, MenuItemMoving, MenuItemFade, MenuButtonRotation]
+    public static let Default: CustomAnimationOptions = [MenuItemRotation, MenuItemBound, MenuItemMoving, MenuButtonRotation]
+    public static let All: CustomAnimationOptions = [MenuItemRotation, MenuItemBound, MenuItemMoving, MenuItemFade, MenuButtonRotation]
 }
 
 open class ExpandingMenuButton: UIView, UIGestureRecognizerDelegate {
@@ -75,8 +75,8 @@ open class ExpandingMenuButton: UIView, UIGestureRecognizerDelegate {
     open var expandingDirection: ExpandingDirection = ExpandingDirection.top
     open var menuTitleDirection: MenuTitleDirection = MenuTitleDirection.left
     
-    open var enabledExpandingAnimations: AnimationOptions = .Default
-    open var enabledFoldingAnimations: AnimationOptions = .Default
+    open var enabledExpandingAnimations: CustomAnimationOptions = .Default
+    open var enabledFoldingAnimations: CustomAnimationOptions = .Default
     
     @objc open var willPresentMenuItems: ((ExpandingMenuButton) -> Void)?
     @objc open var didPresentMenuItems: ((ExpandingMenuButton) -> Void)?
