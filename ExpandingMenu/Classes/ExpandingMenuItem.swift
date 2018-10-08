@@ -10,10 +10,7 @@ import UIKit
 open class ExpandingMenuItem: UIView {
     
     @objc open var title: String? {
-        get {
-            return self.titleButton?.titleLabel?.text
-        }
-        
+        get { return self.titleButton?.titleLabel?.text }
         set {
             if let title = newValue {
                 if let titleButton = self.titleButton {
@@ -21,7 +18,6 @@ open class ExpandingMenuItem: UIView {
                 } else {
                     self.titleButton = self.createTitleButton(title, titleColor: self.titleColor)
                 }
-                
                 self.titleButton?.sizeToFit()
             } else {
                 self.titleButton = nil
@@ -29,16 +25,11 @@ open class ExpandingMenuItem: UIView {
         }
     }
     
-    @objc open var titleMargin: CGFloat = 8.0
+    @objc open var titleMargin: CGFloat = 5.0
     
     @objc open var titleColor: UIColor? {
-        get {
-            return self.titleButton?.titleColor(for: UIControlState())
-        }
-        
-        set {
-            self.titleButton?.setTitleColor(newValue, for: UIControlState())
-        }
+        get { return self.titleButton?.titleColor(for: UIControlState()) }
+        set { self.titleButton?.setTitleColor(newValue, for: UIControlState()) }
     }
     
     @objc var titleTappedActionEnabled: Bool = true {
@@ -49,7 +40,7 @@ open class ExpandingMenuItem: UIView {
     
     var index: Int = 0
     weak var delegate: ExpandingMenuButton?
-    fileprivate(set) var titleButton:UIButton?
+    fileprivate(set) var titleButton: UIButton?
     fileprivate var frontImageView: UIImageView
     fileprivate var tappedAction: (() -> Void)?
     

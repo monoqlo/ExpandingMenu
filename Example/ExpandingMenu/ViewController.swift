@@ -25,7 +25,7 @@ class ViewController: UIViewController {
 
     fileprivate func configureExpandingMenuButton() {
         let menuButtonSize: CGSize = CGSize(width: 64.0, height: 64.0)
-        let menuButton = ExpandingMenuButton(frame: CGRect(origin: CGPoint.zero, size: menuButtonSize), centerImage: UIImage(named: "chooser-button-tab")!, centerHighlightedImage: UIImage(named: "chooser-button-tab-highlighted")!)
+        let menuButton = ExpandingMenuButton(frame: CGRect(origin: CGPoint.zero, size: menuButtonSize), image: UIImage(named: "chooser-button-tab")!, rotatedImage: UIImage(named: "chooser-button-tab-highlighted")!)
         menuButton.center = CGPoint(x: self.view.bounds.width - 32.0, y: self.view.bounds.height - 72.0)
         self.view.addSubview(menuButton)
         
@@ -64,6 +64,14 @@ class ViewController: UIViewController {
         menuButton.didDismissMenuItems = { (menu) -> Void in
             print("MenuItems dismissed.")
         }
+        
+        menuButton.bottomViewAlpha = 0.1
+        menuButton.bottomViewColor = .black
+        menuButton.titleTappedActionEnabled = false
+        menuButton.playSound = false
+        
+        
+        
     }
 }
 
