@@ -45,7 +45,7 @@ open class ExpandingMenuItem: UIView {
     fileprivate var tappedAction: (() -> Void)?
     
     // MARK: - Initializer
-    public init(size: CGSize?, title: String? = nil, titleColor: UIColor? = nil, image: UIImage, highlightedImage: UIImage, backgroundImage: UIImage?, backgroundHighlightedImage: UIImage?, itemTapped: (() -> Void)?) {
+    public init(size: CGSize?, title: String? = nil, titleColor: UIColor? = nil, image: UIImage, highlightedImage: UIImage?, backgroundImage: UIImage?, backgroundHighlightedImage: UIImage?, itemTapped: (() -> Void)?) {
         
         // Initialize properties
         //
