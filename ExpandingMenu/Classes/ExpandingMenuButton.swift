@@ -44,7 +44,6 @@ open class ExpandingMenuButton: UIView, UIGestureRecognizerDelegate {
     @objc open var menuItemMargin: CGFloat = 7.0
     @objc open var menuButtonHapticStyle: HapticFeedbackStyle = .medium
     @objc open var menuItemsHapticStyle: HapticFeedbackStyle = .light
-    @objc open var explodeAnimationOnItemTap: Bool = true
     
     @objc open var playSound: Bool = false {
         didSet {
@@ -191,14 +190,12 @@ open class ExpandingMenuButton: UIView, UIGestureRecognizerDelegate {
             self.generateHapticFeedback(self.menuItemsHapticStyle)
         }
         
-        if self.explodeAnimationOnItemTap == true {
-            // Excute the explode animation when the item is seleted
-            //
-            UIView.animate(withDuration: 0.0618 * 5.0, animations: { () -> Void in
-                item.transform = CGAffineTransform(scaleX: 3.0, y: 3.0)
-                item.alpha = 0.0
-            })
-        }
+        // Excute the explode animation when the item is seleted
+        //
+        UIView.animate(withDuration: 0.0618 * 5.0, animations: { () -> Void in
+            item.transform = CGAffineTransform(scaleX: 3.0, y: 3.0)
+            item.alpha = 0.0
+        })
         
         // Excute the dismiss animation when the item is unselected
         //
