@@ -64,14 +64,6 @@ class ViewController: UIViewController {
         menuButton.didDismissMenuItems = { (menu) -> Void in
             print("MenuItems dismissed.")
         }
-        
-        menuButton.bottomViewAlpha = 0.1
-        menuButton.bottomViewColor = .black
-        menuButton.titleTappedActionEnabled = false
-        menuButton.playSound = false
-        
-        
-        
     }
 }
 
