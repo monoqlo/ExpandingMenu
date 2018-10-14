@@ -45,7 +45,7 @@ open class ExpandingMenuButton: UIView, UIGestureRecognizerDelegate {
     @objc open var menuButtonHapticStyle: HapticFeedbackStyle = .medium
     @objc open var menuItemsHapticStyle: HapticFeedbackStyle = .light
     
-    @objc open var playSound: Bool = false {
+    @objc open var playSound: Bool = true {
         didSet {
             self.configureSounds()
         }
