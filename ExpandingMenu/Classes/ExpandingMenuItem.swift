@@ -14,7 +14,11 @@ open class ExpandingMenuItem: UIView {
         set {
             if let title = newValue {
                 if let titleButton = self.titleButton {
+                    #if swift(>=4.2)
+                    titleButton.setTitle(title, for: UIControl.State())
+                    #else
                     titleButton.setTitle(title, for: UIControlState())
+                    #endif
                 } else {
                     self.titleButton = self.createTitleButton(title, titleColor: self.titleColor)
                 }
@@ -27,10 +31,17 @@ open class ExpandingMenuItem: UIView {
     
     @objc open var titleMargin: CGFloat = 5.0
     
+    #if swift(>=4.2)
+    @objc open var titleColor: UIColor? {
+        get { return self.titleButton?.titleColor(for: UIControl.State()) }
+        set { self.titleButton?.setTitleColor(newValue, for: UIControl.State()) }
+    }
+    #else
     @objc open var titleColor: UIColor? {
         get { return self.titleButton?.titleColor(for: UIControlState()) }
         set { self.titleButton?.setTitleColor(newValue, for: UIControlState()) }
     }
+    #endif
     
     @objc var titleTappedActionEnabled: Bool = true {
         didSet {
@@ -70,8 +81,12 @@ open class ExpandingMenuItem: UIView {
         // Configure base button
         //
         let baseButton = UIButton()
+        #if swift(>=4.2)
+        baseButton.setImage(backgroundImage, for: UIControl.State())
+        #else
         baseButton.setImage(backgroundImage, for: UIControlState())
-        baseButton.setImage(backgroundHighlightedImage, for: UIControlState.highlighted)
+        #endif
+        baseButton.setImage(backgroundHighlightedImage, for: .highlighted)
         baseButton.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(baseButton)
         
@@ -83,7 +98,7 @@ open class ExpandingMenuItem: UIView {
         
         // Add an action for the item
         //
-        baseButton.addTarget(self, action: #selector(tapped), for: UIControlEvents.touchUpInside)
+        baseButton.addTarget(self, action: #selector(tapped), for: .touchUpInside)
         
         // Configure front images
         //
@@ -124,11 +139,16 @@ open class ExpandingMenuItem: UIView {
     // MARK: - Title Button
     fileprivate func createTitleButton(_ title: String, titleColor: UIColor? = nil) -> UIButton {
         let button = UIButton()
+        #if swift(>=4.2)
+        button.setTitle(title, for: UIControl.State())
+        button.setTitleColor(titleColor, for: UIControl.State())
+        #else
         button.setTitle(title, for: UIControlState())
         button.setTitleColor(titleColor, for: UIControlState())
+        #endif
         button.sizeToFit()
         
-        button.addTarget(self, action: #selector(tapped), for: UIControlEvents.touchUpInside)
+        button.addTarget(self, action: #selector(tapped), for: .touchUpInside)
         
         return button
     }

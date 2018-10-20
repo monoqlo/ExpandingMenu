@@ -13,6 +13,7 @@ ExpandingMenu is written in Swift.
 
 - iOS 8.0+
 - Xcode 10.0+
+- Swift 3.x+
 
 ## Installation
 
