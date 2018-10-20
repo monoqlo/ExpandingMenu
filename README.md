@@ -12,7 +12,7 @@ ExpandingMenu is written in Swift.
 ## Requirements
 
 - iOS 8.0+
-- Xcode 8.0+
+- Xcode 10.0+
 
 ## Installation
 
@@ -32,7 +32,7 @@ platform :ios, '8.0'
 use_frameworks!
 
 target '<Your Target Name>' do
-    pod 'ExpandingMenu', '~> 0.3'
+    pod 'ExpandingMenu', '~> 0.4'
 end
 ```
 
@@ -54,7 +54,7 @@ $ brew install carthage
 To integrate ExpandingMenu into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
-github "monoqlo/ExpandingMenu" ~> 0.3
+github "monoqlo/ExpandingMenu" ~> 0.4
 ```
 
 Run `carthage update` to build the framework and drag the built `ExpandingMenu.framework` into your Xcode project.
@@ -69,7 +69,7 @@ Run `carthage update` to build the framework and drag the built `ExpandingMenu.f
 import ExpandingMenu
 
 let menuButtonSize: CGSize = CGSize(width: 64.0, height: 64.0)
-let menuButton = ExpandingMenuButton(frame: CGRect(origin: CGPoint.zero, size: menuButtonSize), centerImage: UIImage(named: "chooser-button-tab")!, centerHighlightedImage: UIImage(named: "chooser-button-tab-highlighted")!)
+let menuButton = ExpandingMenuButton(frame: CGRect(origin: CGPoint.zero, size: menuButtonSize), image: UIImage(named: "chooser-button-tab")!, rotatedImage: UIImage(named: "chooser-button-tab-highlighted")!)
 menuButton.center = CGPoint(x: self.view.bounds.width - 32.0, y: self.view.bounds.height - 72.0)
 view.addSubview(menuButton)
 
