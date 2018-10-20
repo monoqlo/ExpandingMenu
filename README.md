@@ -121,14 +121,14 @@ menuButton.didDismissMenuItems = { (menu) -> Void in
 }
 
 // Expanding Animation
-menuButton.enabledExpandingAnimations = [] // No animation
+menuButton.expandingAnimations = [] // No animation
 
-menuButton.enabledExpandingAnimations = CustomAnimationOptions.All.exclusiveOr(.MenuItemRotation)
+menuButton.expandingAnimations = CustomAnimationOptions.all.symmetricDifference(.menuButtonRotate)
 
 // Folding Animation
-menuButton.enabledFoldingAnimations = .All
+menuButton.foldingAnimations = .all
 
-menuButton.enabledFoldingAnimations = [.MenuItemMoving, .MenuItemFade, .MenuButtonRotation]
+menuButton.foldingAnimations = [.MenuItemMoving, .MenuItemFade, .MenuButtonRotation]
 ```
 
 
