@@ -8,8 +8,8 @@
 
 Pod::Spec.new do |s|
   s.name             = "ExpandingMenu"
-  s.version          = "0.3.1"
-  s.summary          = "A mune button expanding vertical."
+  s.version          = "0.4.0"
+  s.summary          = "A menu button expanding vertical."
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
