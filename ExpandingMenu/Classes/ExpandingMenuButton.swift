@@ -124,7 +124,7 @@ open class ExpandingMenuButton: UIView, UIGestureRecognizerDelegate {
             self.menuButton = UIButton(frame: CGRect(x: 0.0, y: 0.0, width: menuButtonSize.width, height: menuButtonSize.height))
             self.menuButton.setImage(self.menuButtonImage, for: .normal)
             self.menuButton.setImage(self.menuButtonHighlightedImage, for: .highlighted)
-            self.menuButton.addTarget(self, action: #selector(centerButtonTapped), for: UIControlEvents.touchDown)
+            self.menuButton.addTarget(self, action: #selector(centerButtonTapped), for: .touchDown)
             self.menuButton.center = CGPoint(x: self.frame.width / 2.0, y: self.frame.height / 2.0)
             self.addSubview(self.menuButton)
             
@@ -315,8 +315,11 @@ open class ExpandingMenuButton: UIView, UIGestureRecognizerDelegate {
                 })
             }
         }
-        
+        #if swift(>=4.2)
+        self.bringSubviewToFront(self.menuButton)
+        #else
         self.bringSubview(toFront: self.menuButton)
+        #endif
         
         // Resize the ExpandingMenuButton's frame to the foled frame and remove the item buttons
         //
@@ -328,7 +331,7 @@ open class ExpandingMenuButton: UIView, UIGestureRecognizerDelegate {
     
     fileprivate func resizeToFoldedFrame(completion: (() -> Void)?) {
         if self.foldingAnimations.contains(.menuButtonRotate) == true {
-            UIView.animate(withDuration: 0.0618 * 3, delay: 0.0618 * 2, options: UIViewAnimationOptions.curveEaseIn, animations: { () -> Void in
+            UIView.animate(withDuration: 0.0618 * 3, delay: 0.0618 * 2, options: .curveEaseIn, animations: { () -> Void in
                 self.menuButton.transform = CGAffineTransform(rotationAngle: 0.0)
                 self.menuButton.setImage(self.menuButtonImage, for: .normal)
                 self.menuButton.setImage(self.menuButtonHighlightedImage, for: .highlighted)
@@ -337,7 +340,7 @@ open class ExpandingMenuButton: UIView, UIGestureRecognizerDelegate {
             self.menuButton.transform = CGAffineTransform(rotationAngle: 0.0)
         }
         
-        UIView.animate(withDuration: 0.15, delay: 0.35, options: UIViewAnimationOptions.curveLinear, animations: { () -> Void in
+        UIView.animate(withDuration: 0.15, delay: 0.35, options: .curveLinear, animations: { () -> Void in
             self.bottomView.alpha = 0.0
             }, completion: { (finished) -> Void in
                 // Remove the items from the superview
@@ -369,7 +372,11 @@ open class ExpandingMenuButton: UIView, UIGestureRecognizerDelegate {
         if self.foldingAnimations.contains(.rotate) == true {
             let rotationAnimation: CAKeyframeAnimation = CAKeyframeAnimation(keyPath: "transform.rotation.z")
             rotationAnimation.values = [0.0, Double.pi, Double.pi * 2.0]
+            #if swift(>=4.2)
+            rotationAnimation.timingFunction = CAMediaTimingFunction(name: .linear)
+            #else
             rotationAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
+            #endif
             rotationAnimation.duration = 0.35
             
             animationGroup.animations?.append(rotationAnimation)
@@ -453,7 +460,7 @@ open class ExpandingMenuButton: UIView, UIGestureRecognizerDelegate {
         
         // 3. Excute the bottom view alpha animation
         //
-        UIView.animate(withDuration: 0.0618 * 3, delay: 0.0, options: UIViewAnimationOptions.curveEaseIn, animations: { () -> Void in
+        UIView.animate(withDuration: 0.0618 * 3, delay: 0.0, options: .curveEaseIn, animations: { () -> Void in
             self.bottomView.alpha = self.bottomViewAlpha
             }, completion: nil)
         
